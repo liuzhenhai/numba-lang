@@ -53,7 +53,7 @@ def bound(self):
     # assert len(freevars) == len(key)
 
     # TODO: Parameterization by type terms
-    return dict((t.symbol, v) for t, v in zip(freevars, self.parameters))
+    return dict((t.symbol, v) for t, v in zip(freevars, self.params))
 
 
 class MetaType(type):
@@ -113,7 +113,7 @@ class MetaType(type):
 
         # Construct concrete type
         constructor = type(self.type)
-        result = constructor(*key)
+        result = constructor.fromparams(*key)
 
         return result
 
@@ -178,9 +178,9 @@ def resolve_in_scope(ty, scope):
                 impl = scope.get(name) or lookup_builtin_type(name)
 
             if impl is None:
-                if name in freevars:
-                    # `a[b]` where `a` is a variable type constructor
-                    return freevars[name]
+                #if name in freevars:
+                #    # `a[b]` where `a` is a variable type constructor
+                #    return freevars[name]
 
                 raise TypeError(
                     "Type constructor %r is not in the current scope" % (name,))
@@ -189,7 +189,7 @@ def resolve_in_scope(ty, scope):
             # Int[nbits, unsigned])
             ctor = impl.type.__class__
 
-            return ctor(*t.parameters)
+            return ctor.fromparams(*t.params)
 
         elif isinstance(t, TypeVar) and t.symbol[0].isupper():
             # Resolve bare types, e.g. a name like 'NoneType' is parsed as a

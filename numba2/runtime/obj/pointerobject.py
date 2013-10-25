@@ -57,7 +57,7 @@ class Pointer(object):
 
     @classmethod
     def ctype(cls, ty):
-        [base] = ty.parameters
+        [base] = ty.params
         return ctypes.POINTER(ctype(base))
 
 

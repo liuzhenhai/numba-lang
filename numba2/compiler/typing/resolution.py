@@ -55,8 +55,8 @@ def infer_function_call(func, func_type, argtypes):
     from numba2 import phase
 
     if is_method(func_type):
-        func = func_type.parameters[0]
-        argtypes = [func_type.parameters[1]] + list(argtypes)
+        func = func_type.params[0]
+        argtypes = [func_type.params[1]] + list(argtypes)
     else:
         func = func.const
 
@@ -73,8 +73,8 @@ def infer_class_call(func, func_type, argtypes):
     """
     Constructor application.
     """
-    classtype = func_type.parameters[0] # extract T from Type[T]
-    freevars = classtype.parameters
+    classtype = func_type.params[0] # extract T from Type[T]
+    freevars = classtype.params
     argtypes = [classtype] + list(argtypes)
     if freevars:
         classtype = infer_constructor_application(classtype, argtypes)
@@ -87,7 +87,7 @@ def infer_foreign_call(func, func_type, argtypes):
     """
 
     if isinstance(func_type, type(ForeignFunction.type)):
-        restype = func_type.parameters[-1]
+        restype = func_type.params[-1]
     else:
         restype = func_type.restype
     assert restype

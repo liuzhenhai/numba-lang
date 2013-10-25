@@ -32,9 +32,9 @@ def exc_match(exc_type, exception):
     See whether `exception` matches `exc_type`
     """
     if exc_type.impl == Type: # Type[Exception]
-        exc_type = exc_type.parameters[0]
+        exc_type = exc_type.params[0]
     if exception.impl == Type: # Type[Exception]
-        exception = exception.parameters[0]
+        exception = exception.params[0]
 
     assert issubclass(exception.impl, Exception), exception.impl
     assert issubclass(exc_type.impl, Exception), exc_type.impl

@@ -102,7 +102,7 @@ class StaticTuple(object):
 
     @staticmethod
     def fromobject(tuple, type):
-        head, tail = type.parameters
+        head, tail = type.params
         hd = fromobject(tuple[0], head)
         if tuple[1:]:
             tl = fromobject(tuple[1:], tail)
@@ -113,7 +113,7 @@ class StaticTuple(object):
 
     @staticmethod
     def toobject(value, type):
-        head, tail = type.parameters
+        head, tail = type.params
         hd = toobject(value.hd, head)
         if isinstance(value.tl, EmptyTuple):
             return (hd,)

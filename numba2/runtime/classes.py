@@ -6,9 +6,10 @@ Entry points for runtime code.
 
 from __future__ import print_function, division, absolute_import
 import string
+import ctypes
 import textwrap
 
-from numba2.typing import parse
+from numba2.typing import parse, TypeVar
 
 #===------------------------------------------------------------------===
 # Class signatures
@@ -29,7 +30,7 @@ def allocate_type_constructor(cls, signature):
         return constructor, t
     else:
         constructor = TypeConstructor(cls.__name__, 0, [])
-        return constructor, constructor()
+        return constructor, constructor.fromparams()
 
 def parse_constructor(signature):
     """Parse a type pass to @jit on a class"""
@@ -48,7 +49,7 @@ def parse_constructor(signature):
             "Expected a type variable or type constructor as a signature, got %s" % (t,))
     else:
         name = type(t).__name__
-        params = t.parameters
+        params = t.params
 
     for i, param in enumerate(params):
         if not isinstance(param, (TypeVar, EllipsisT)):

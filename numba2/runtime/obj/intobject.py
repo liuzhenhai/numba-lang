@@ -21,7 +21,7 @@ class Int(Number):
 
     @classmethod
     def ctype(cls, ty):
-        nbits, unsigned = ty.parameters
+        nbits, unsigned = ty.params
         return getattr(ctypes, 'c_%sint%d' % ('u' if unsigned else '', nbits))
 
 

@@ -23,7 +23,7 @@ def typeof(pyval):
     from numba2 import cffi_support, ctypes_support, types
 
     if is_numba_type(pyval):
-        if pyval.type.parameters:
+        if pyval.type.params:
             return Constructor[pyval.type]
         return Type[pyval.type]
     elif isinstance(pyval, types.Mono):
@@ -53,7 +53,7 @@ def infer_constant(value):
 
     classtype = type(value).type
 
-    if not classtype.parameters:
+    if not classtype.params:
         return classtype
 
     concrete_layout = {}

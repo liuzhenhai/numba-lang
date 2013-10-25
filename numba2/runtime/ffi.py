@@ -52,7 +52,7 @@ def sizeof(obj):
 def implement_sizeof(builder, argtypes, obj):
     [argtype] = argtypes
     if argtype.impl == Type:
-        [argtype] = argtype.parameters # Unpack 'a' from 'Type[a]'
+        [argtype] = argtype.params # Unpack 'a' from 'Type[a]'
         cty = ctype(argtype)
         size = ctypes.sizeof(cty)
         result = ir.Const(size, ptypes.Int64)

@@ -15,7 +15,7 @@ class Type(object):
 
     @staticmethod
     def toobject(obj, type):
-        return type.parameters[0]
+        return type.params[0]
 
 
 @jit('Constructor[a]')

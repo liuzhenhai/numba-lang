@@ -98,7 +98,7 @@ def pointer_store(builder, argtypes, ptr, value):
 # Determine low-level return types
 
 def _getitem_type(argtypes):
-    base = argtypes[0].parameters[0]
+    base = argtypes[0].params[0]
     return lltype(base)
 
 # Implement

@@ -44,7 +44,7 @@ def cast(x, type):
 
 def convert(builder, argtypes, value, type):
     valtype, typetype = argtypes # e.g. `int, Type[double]`
-    type = typetype.parameters[0]
+    type = typetype.params[0]
 
     if type.impl == Pointer:
         result = builder.ptrcast(lltype(type), value)
@@ -55,6 +55,6 @@ def convert(builder, argtypes, value, type):
 
 
 def result_type(argtypes):
-    return lltype(argtypes[1].parameters[0])
+    return lltype(argtypes[1].params[0])
 
 add_impl(cast, "cast", convert, restype_func=result_type)

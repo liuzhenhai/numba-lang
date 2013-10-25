@@ -20,7 +20,7 @@ class Float(Number):
 
     @classmethod
     def ctype(cls, ty):
-        [nbits] = ty.parameters
+        [nbits] = ty.params
         return {32: ctypes.c_float, 64: ctypes.c_double}[nbits]
 
 

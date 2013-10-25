@@ -3,6 +3,7 @@ from __future__ import print_function, division, absolute_import
 
 from numba2.typing import resolve, to_blaze
 
+from blaze.datashape import free
 from blaze import overloading
 from blaze.kernel import lookup_previous
 from blaze.overloading import overload, Dispatcher
@@ -56,8 +57,18 @@ def best_match(func_wrapper, argtypes):
     #print('------------------')
     overload = overloading.best_match(overloaded, argtypes)
     signature = resolve(overload.resolved_sig, scope, bound)
+    #verify_signature(overload.func, signature, argtypes)
     return (overload.func, signature, overload.kwds)
 
+def verify_signature(func, signature, argtypes):
+    if not signature.argtypes:
+        return
+
+    freevars = set.union(*[set(free(argtype)) for argtype in signature.argtypes])
+    if freevars:
+        raise TypeError(
+            "Signature %s for function %s still has free variables %s "
+            "for argtypes %s" % (signature, func, freevars, argtypes))
 
 def determine_scope(py_func):
     return py_func.__globals__

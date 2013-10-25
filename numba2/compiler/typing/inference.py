@@ -56,7 +56,7 @@ def view(G):
     networkx.draw(G)
     plt.show()
 
-Method = type(parse("Method[func, self]"))
+Method = type(parse("Method[func, self]")).fromparams
 
 #===------------------------------------------------------------------===
 # Inference structures

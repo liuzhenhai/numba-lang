@@ -31,7 +31,7 @@ def rewrite_raise_exc_type(func, env):
                     exc_obj = b.call(ptypes.Opaque, exc_type, [])
                     op.set_args([exc_obj])
 
-                    type = ty.parameters[0]
+                    type = ty.params[0]
                     context[exc_obj] = type
 
 
